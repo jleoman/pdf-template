@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* ===== RESET ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: white;
+      color: #1e293b;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ===== PAGE SETUP ===== */
+    .page {
+      width: 794px;
+      height: 1123px;
+      padding: 40px 40px 70px 40px;  /* INCREASED bottom padding for footer */
+      position: relative;
+      page-break-after: always;
+      overflow: hidden;
+      background: white;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* ===== ROUNDED WRAPPER - THE CURVE ===== */
+    .wrapper {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      background: white;
+    }
+
+    /* Blue left border for continued tables */
+    .wrapper.continued {
+      border-left: 4px solid #3b82f6;
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      background: #f8fafc;
+      padding: 14px 20px;
+      border-bottom: 1px solid #e2e8f0;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-body {
+      padding: 0;  /* NO padding - table fills the wrapper */
+      font-size: 13px;
+    }
+
+    /* ===== DATA TABLE WITH ROUNDED CORNERS ===== */
+    .data-table {
+      width: 100%;
+      border-collapse: separate;  /* CHANGED from collapse to separate */
+      border-spacing: 0;
+      font-size: 12px;
+    }
+
+    /* Round the top corners of the table header */
+    .data-table thead th:first-child {
+      border-top-left-radius: 16px;
+    }
+
+    .data-table thead th:last-child {
+      border-top-right-radius: 16px;
+    }
+
+    /* Round the bottom corners of the last row */
+    .data-table tbody tr:last-child td:first-child {
+      border-bottom-left-radius: 16px;
+    }
+
+    .data-table tbody tr:last-child td:last-child {
+      border-bottom-right-radius: 16px;
+    }
+
+    .data-table th {
+      background: #f1f5f9;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      color: #475569;
+      border-bottom: 2px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    /* Remove bottom border from last row so radius shows */
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* ===== BANK HEADER ===== */
+    .bank-header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+      color: white;
+      padding: 24px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bank-name {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .bank-tagline {
+      font-size: 11px;
+      opacity: 0.8;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ===== INFO GRID ===== */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .info-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* ===== BENEFITS ===== */
+    .benefits-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px 20px;  /* Added padding since section-body has none */
+    }
+
+    .benefit-tag {
+      background: #ecfdf5;
+      color: #059669;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* ===== STATUS BADGES ===== */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .status-active {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-inactive {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* ===== FOOTER - FIXED AT BOTTOM WITH MORE SPACE ===== */
+    .page-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;  /* INCREASED from 50px */
+      padding: 16px 40px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #94a3b8;
+      background: white;
+    }
+
+    /* ===== INFO SECTION BODY PADDING FIX ===== */
+    .info-section-body {
+      padding: 16px 20px;
+    }
+
+    /* ===== OFFER CARD BODY PADDING ===== */
+    .offer-section-body {
+      padding: 16px 20px;
+      background: #eff6ff;
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+  <div id="pages-container"></div>
+</body>
+</html>
